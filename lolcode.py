@@ -8,55 +8,36 @@ oVOCRegex = re.compile(vOCRegex)
 exprRegex = re.compile(r'(SUM|DIFF|PRODUKT|QUOSHUNT|MOD) OF ('+vOCRegex+r'|.+) (.+)')
 varDeclRegex = re.compile(r'(^(I HAS A ([A-Z|a-z]\w*))( ITZ '+vOCRegex+r')?)')
 
-'''def CheckExpr(sLine): #Group 4 is first operand, group 6 is second
-    if re.match(exprRegex, sLine) is not None:
-        fOp = re.match(exprRegex, sLine).group(4)
-        sOp = re.match(exprRegex, sLine).group(6)
-        if fOp != re.match(vOCRegex, fOp).group():
-            if re.match(exprRegex, fOp) is None:
-                return False
-            else:
-                if not CheckExpr(fOp):
-                    return False
-
-        elif sOp != re.match(vOCRegex, sOp).group():
-            if re.match(exprRegex, fOp) is None:
-                return False
-            else:
-                if not CheckExpr(fOp):
-                    return False
-        return True
-'''
 def CheckExpr(sLine, fOp, nOfAnd): #Group 2 is first operand, group 3 is the rest
-    print(nOfAnd)
-    nOfAnd -= 1
+    #print(nOfAnd)
     if nOfAnd < 0:
+        #print('Ands')
         return False
-    print('Line: ' + sLine)
+    #print('Line: ' + sLine)
     eMatch = re.match(exprRegex, sLine)
     if not fOp:
         vMatch = re.match(oVOCRegex, sLine)
     if eMatch is not None:
-        print('Matched expression')
-        print(eMatch.groups())
+        #print('Matched expression')
+        #print(eMatch.groups())
         if re.match(exprRegex, eMatch.group(2) + ' ' + eMatch.group(3)) is not None:
             return CheckExpr(eMatch.group(2) + ' ' + eMatch.group(3), False, nOfAnd + 1)
         if re.match(oVOCRegex, eMatch.group(2)) is not None:
             #print(eMatch.group(3)[3:] + ' | sss')
-            return CheckExpr(eMatch.group(3)[3:], False, nOfAnd + 1)
+            return CheckExpr(eMatch.group(3)[3:], False, nOfAnd - 1)
         else:
             return False
     elif not fOp and vMatch is not None:
-        print('Matched variable')
-        print(vMatch.group())
-        print(sLine + ' |')
+        #print('Matched variable')
+        #print(vMatch.group())
+        #print(sLine + ' |')
         if vMatch.group() == sLine:
             return True
         else:
-            return CheckExpr(vMatch.group()[3:], False, nOfAnd)
-    else:
-        return False
-        
+            l = len(vMatch.group()) + 4
+            return CheckExpr(sLine[l:], False, nOfAnd - 2)
+            
+    return False
 
 pBeg = False
 pEnd = False
@@ -71,6 +52,7 @@ with open('code.lc') as fIn:
             print(line + ' | HAJIMERUZO\n')
             pBeg = True
             continue
+
         if pEnd == True and line != '':
             print(line + ' | ERROR: Code post script end')
             continue
@@ -92,6 +74,7 @@ with open('code.lc') as fIn:
                 print(line + ' | Expr\n')
                 continue
             else:
-                print(line + ' | Error')
+                print(line + ' | Error\n')
 
-        
+        else:
+            print(line + ' | Syntax error\n')
