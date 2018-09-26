@@ -10,7 +10,7 @@ varDeclRegex = re.compile(r'(^(I HAS A ([A-Z|a-z]\w*))( ITZ '+vOCRegex+r')?)')
 
 def CheckExpr(sLine, fOp, nOfAnd): #Group 2 is first operand, group 3 is the rest
     #print(nOfAnd)
-    if nOfAnd < 0:
+    if nOfAnd <= 0:
         #print('Ands')
         return False
     #print('Line: ' + sLine)
@@ -35,7 +35,7 @@ def CheckExpr(sLine, fOp, nOfAnd): #Group 2 is first operand, group 3 is the res
             return True
         else:
             l = len(vMatch.group()) + 4
-            return CheckExpr(sLine[l:], False, nOfAnd - 2)
+            return CheckExpr(sLine[l:], False, nOfAnd - 1)
             
     return False
 
