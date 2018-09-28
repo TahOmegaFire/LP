@@ -6,7 +6,7 @@ vOCRegex = r'([A-Z|a-z]?\w*\_*\w*|\d+)' #Regex for detecting either variables or
 oVOCRegex = re.compile(vOCRegex)
 #exprRegex = re.compile(r'(((SUM|DIFF|PRODUKT|QUOSHUNT|MOD|BIGGR|SMALLR|BOTH|EITHER) OF )(([A-Z]+ OF .+ AN .+)|'+vOCRegex+r')+ AN (([A-Z]+ OF .+ AN .+)|'+vOCRegex+')+)') #TODO: Rest of operators holy shit that was long
 exprRegex = re.compile(r'(SUM|DIFF|PRODUKT|QUOSHUNT|MOD)? OF (.+) AN (.+)')
-varDeclRegex = re.compile(r'(I HAS A [A-Z|a-z]\w*) ITZ (.+)')
+varDeclRegex = re.compile(r'(I HAS A [A-Z|a-z]\w*)\s*(?:ITZ (.+))?')
 expVISRegex=re.compile(r'((VISIBLE|GIMMEH) (.+))') #GIMMEH NO ES LO MISMO QUE EL VISIBLE CAMBIAR
 expRegular=[exprRegex,varDeclRegex,expVISRegex]
 def CheckExpr(sLine): #Group 2 is first operand, group 3 is the rest
@@ -21,6 +21,9 @@ def CheckExpr(sLine): #Group 2 is first operand, group 3 is the rest
 		eMatch = re.match(expRegular[2], sLine)
 		num=2
 	if eMatch is not None:
+		print(eMatch.groups())
+		if (eMatch.group(1)==sLine):
+			return True
 		if (CheckExpr(eMatch.group(2)) is False):
 			return False
 		if num==0:
