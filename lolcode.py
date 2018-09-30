@@ -4,7 +4,6 @@ import re
 
 vOCRegex = r'([A-Z|a-z](?:\w|\_)*|\d+)' #Regex for detecting either variables or numeric constants
 oVOCRegex = re.compile(vOCRegex)
-#exprRegex = re.compile(r'(((SUM|DIFF|PRODUKT|QUOSHUNT|MOD|BIGGR|SMALLR|BOTH|EITHER) OF )(([A-Z]+ OF .+ AN .+)|'+vOCRegex+r')+ AN (([A-Z]+ OF .+ AN .+)|'+vOCRegex+')+)') #TODO: Rest of operators holy shit that was long
 exprRegex = re.compile(r'(SUM|DIFF|PRODUKT|QUOSHUNT|MOD)? OF (.+) AN (.+)')
 varDeclRegex = re.compile(r'(I HAS A [A-Z|a-z]\w*)\s*(?:ITZ (.+))?')
 expVISRegex=re.compile(r'((VISIBLE|GIMMEH) (.+))') #GIMMEH NO ES LO MISMO QUE EL VISIBLE CAMBIAR
@@ -14,6 +13,7 @@ condOpRegex = re.compile(r'(?:(?:BIGGR|SMALLR|BOTH|EITHER) OF|BOTH SAEM|DIFFRINT
 expRegular=[exprRegex,varDeclRegex,expVISRegex]
 loopLines = list()
 loopNames = list()
+condLines = list()
 
 nLoop = 0
 pBeg = False
@@ -44,6 +44,28 @@ def CheckExpr(sLine): #Group 2 is first operand, group 3 is the rest
 			return False
 	return True
 
+def CheckCond(nLine, fL):
+	c = re.match(condOpRegex, fL[nLine])
+	if c:
+		if fL[nLine + 1] == 'O RLY?' and fL[nLine + 2] == 'YA RLY':
+			nnLine = 0
+			for index in range(nLine + 2, len(fL)):
+				if fL[index] == 'NO WAI':
+					if nnLine == 0:
+						nnLine = index
+					else:
+						print(fL[nLine] + ' | Error')
+						return
+				elif fL[index] == 'OIC' and nnLine != 0:
+					condLines.append(nLine + 1)
+					condLines.append(nLine + 2)
+					condLines.append(nnLine)
+					condLines.append(index)
+					return
+				elif re.match(condOpRegex, fL[index]):
+					CheckCond(index, fL)
+		print(fL[nLine] + ' | Error')
+
 def Iter(line, curL, fL):
 	global pBeg
 	global pEnd
@@ -71,27 +93,19 @@ def Iter(line, curL, fL):
 		print(line + ' | BAI\n')
 		pEnd = True
 		pBeg = False
-		#continue
 		return
 
 	m = re.match(loopRegex, line)
 	if m is not None:
-		#print(m.groups())
 		h = re.match(condOpRegex, m.group(3))
 		if h:
-			#print(h.groups())
 			loopN = 0
 			for j in range(curL, len(fL)):
-				#print(j)
-				#print(curL)
-				#print(fL)
 				e = re.match(loopERegex, fL[j])
 				l = re.match(loopRegex, fL[j])
 				if l and l.group(1) != m.group(1):
-					#print(l.groups())
 					loopN += 1
 				elif e:
-					#print(e.groups())
 					if e.group(1) != m.group(1):
 						loopN -= 1
 						continue
@@ -103,41 +117,27 @@ def Iter(line, curL, fL):
 			print(line + ' | Error')
 			return
 
-			'''loopNames.append(m.group(1))
-			loopLines.append(curL)
-			nLoop += 1
-			#loopLines[nLoop - 1].append(line)
-			return'''
+	
+	c = re.match(condOpRegex, line)
+	if c:
+		CheckCond(curL, fL)
+		return
 
-	if CheckExpr(line):
+	if line != 'OIC' and CheckExpr(line):
 		print(line + ' | Expr\n')
 		return
 	else:
 		print(line + ' | Error\n')
-
-'''def LoopHelper(loopLines, depth):
-	print(loopLines[depth][0] + ' | Loop begin')
-	
-	length = len(loopLines[depth]) - 1
-	for line in loopLines[depth][1:length]:
-		l = re.match(loopRegex, line)
-		if l is not None:
-			print(l.groups())
-			LoopHelper(loopLines, depth + 1)
-			continue
-		Iter(line)
-	print(loopLines[depth][length] + ' | Loop end')
-	del loopLines[depth]'''
-
-#def LoopHelper(fileLines, 
 
 with open('code.lc') as fIn:
 	fileLines = list()
 	for iLine in fIn:
 		iLine = iLine.strip()
 		fileLines.append(iLine)
-	print(fileLines)
 	for i in range(len(fileLines)):
+		if i in condLines:
+			print(fileLines[i] + ' | Cond')
+			continue
 		e = re.match(loopERegex, fileLines[i])
 		if e is not None and nLoop > 0 and nLoop - 1 < len(loopNames) and loopNames[nLoop - 1] == e.group(1):
 			print(fileLines[i] + ' | Loop end')
@@ -146,30 +146,3 @@ with open('code.lc') as fIn:
 			continue
 		Iter(fileLines[i], i, fileLines)
 				
-		'''if nLoop == 0:
-			if len(loopLines) != 0:
-				LoopHelper(loopLines, 0)
-			Iter(iLine)
-
-		else:
-			loopLines[nLoop - 1].append(iLine)
-			e = re.match(loopERegex, iLine)
-			l = re.match(loopRegex, iLine)	
-			if e is not None and loopNames[nLoop - 1] == e.group(1):
-				loopNames.pop()
-				nLoop -= 1
-
-			else:
-				for name in loopNames:
-					if e is not None and name == e.group(1):
-						nLoop -= 1
-						for lLine in loopLines[nLoop]:
-							print(lLine + ' | Error')
-						del loopLines[nLoop]
-			if l is not None:
-				loopNames.append(l.group(1))
-				nList = list()
-				loopLines.append(nList)
-				nLoop += 1
-				loopLines[nLoop - 1].append(iLine)
-				continue'''
