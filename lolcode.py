@@ -10,6 +10,7 @@ varDeclRegex = re.compile(r'(I HAS A [A-Z|a-z]\w*)\s*(?:ITZ (.+))?')
 expVISRegex=re.compile(r'((VISIBLE|GIMMEH) (.+))') #GIMMEH NO ES LO MISMO QUE EL VISIBLE CAMBIAR
 loopRegex=re.compile(r'IM IN YR ([A-Z|a-z](?:\w|\_)*) (?:UPPIN|NERFIN) YR ([A-Z|a-z](?:\w|\_)*) (?:TIL|WHILE) (.+)')
 loopERegex = re.compile(r'IM OUTTA YR (.+)')
+condOpRegex = re.compile(r'(?:(?:BIGGR|SMALLR|BOTH|EITHER) OF|BOTH SAEM|DIFFRINT|NOT) (.*)')
 expRegular=[exprRegex,varDeclRegex,expVISRegex]
 loopLines = list()
 loopNames = list()
@@ -43,7 +44,7 @@ def CheckExpr(sLine): #Group 2 is first operand, group 3 is the rest
 			return False
 	return True
 
-def Iter(line):
+def Iter(line, curL, fL):
 	global pBeg
 	global pEnd
 	global nLoop
@@ -72,17 +73,41 @@ def Iter(line):
 		pBeg = False
 		#continue
 		return
-#if re.match(expRegular[0],line) is not None:
-#print(re.match(expRegular[0],line).groups())
 
 	m = re.match(loopRegex, line)
 	if m is not None:
-		loopNames.append(m.group(1))
-		nList = list()
-		loopLines.append(nList)
-		nLoop += 1
-		loopLines[nLoop - 1].append(line)
-		return
+		#print(m.groups())
+		h = re.match(condOpRegex, m.group(3))
+		if h:
+			#print(h.groups())
+			loopN = 0
+			for j in range(curL, len(fL)):
+				#print(j)
+				#print(curL)
+				#print(fL)
+				e = re.match(loopERegex, fL[j])
+				l = re.match(loopRegex, fL[j])
+				if l and l.group(1) != m.group(1):
+					#print(l.groups())
+					loopN += 1
+				elif e:
+					#print(e.groups())
+					if e.group(1) != m.group(1):
+						loopN -= 1
+						continue
+					elif e.group(1) == m.group(1) and loopN == 0:
+						print(line + ' | Loop begin')
+						loopNames.append(m.group(1))
+						nLoop += 1
+						return
+			print(line + ' | Error')
+			return
+
+			'''loopNames.append(m.group(1))
+			loopLines.append(curL)
+			nLoop += 1
+			#loopLines[nLoop - 1].append(line)
+			return'''
 
 	if CheckExpr(line):
 		print(line + ' | Expr\n')
@@ -90,7 +115,7 @@ def Iter(line):
 	else:
 		print(line + ' | Error\n')
 
-def LoopHelper(loopLines, depth):
+'''def LoopHelper(loopLines, depth):
 	print(loopLines[depth][0] + ' | Loop begin')
 	
 	length = len(loopLines[depth]) - 1
@@ -102,12 +127,26 @@ def LoopHelper(loopLines, depth):
 			continue
 		Iter(line)
 	print(loopLines[depth][length] + ' | Loop end')
+	del loopLines[depth]'''
 
+#def LoopHelper(fileLines, 
 
 with open('code.lc') as fIn:
+	fileLines = list()
 	for iLine in fIn:
 		iLine = iLine.strip()
-		if nLoop == 0:
+		fileLines.append(iLine)
+	print(fileLines)
+	for i in range(len(fileLines)):
+		e = re.match(loopERegex, fileLines[i])
+		if e is not None and nLoop > 0 and nLoop - 1 < len(loopNames) and loopNames[nLoop - 1] == e.group(1):
+			print(fileLines[i] + ' | Loop end')
+			loopNames.pop()
+			nLoop -= 1
+			continue
+		Iter(fileLines[i], i, fileLines)
+				
+		'''if nLoop == 0:
 			if len(loopLines) != 0:
 				LoopHelper(loopLines, 0)
 			Iter(iLine)
@@ -118,13 +157,7 @@ with open('code.lc') as fIn:
 			l = re.match(loopRegex, iLine)	
 			if e is not None and loopNames[nLoop - 1] == e.group(1):
 				loopNames.pop()
-				#loopLines[nLoop - 1].pop()
 				nLoop -= 1
-				#print(loopLines[nLoop][0] + ' | Loop begin')
-				#for lLine in loopLines[nLoop][1:]:
-				#	Iter(lLine)
-				#print(iLine + ' | Loop end')
-				#del loopLines[nLoop]
 
 			else:
 				for name in loopNames:
@@ -132,10 +165,11 @@ with open('code.lc') as fIn:
 						nLoop -= 1
 						for lLine in loopLines[nLoop]:
 							print(lLine + ' | Error')
+						del loopLines[nLoop]
 			if l is not None:
 				loopNames.append(l.group(1))
 				nList = list()
 				loopLines.append(nList)
 				nLoop += 1
 				loopLines[nLoop - 1].append(iLine)
-				continue
+				continue'''
