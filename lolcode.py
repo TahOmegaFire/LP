@@ -13,10 +13,11 @@ expGIMRegex=re.compile(r'(GIMMEH) ([A-Z|a-z]\w*)')
 expReRegex=re.compile(r'([A-Z|a-z]\w*) (R) (.+)')
 loopRegex=re.compile(r'(IM IN YR) ([A-Z|a-z]\w*) ((?:UPPIN|NERFIN) YR) ([A-Z|a-z]\w*) (TIL|WHILE) (.+)')
 loopERegex = re.compile(r'(IM OUTTA YR) ([A-Z|a-z]\w*)')
+expNOTRegex = re.compile(r'(NOT) (.+)')
 condOpRegex = re.compile(r'(?:(?:BIGGR|SMALLR|BOTH|EITHER) OF|BOTH SAEM|DIFFRINT|NOT) (.*)')
 condRegex = re.compile(r'(O RLY\?|YA RLY|NO WAI|OIC)')
-expRegular=[exprDRegex,expReRegex,expVISRegex,expGIMRegex,varDeclRegex,loopRegex,loopERegex,condRegex]
-colReg=['34','31','31','31','33','35','35','36']
+expRegular=[exprDRegex,expReRegex,expVISRegex,expGIMRegex,varDeclRegex,loopRegex,loopERegex,condRegex,expNOTRegex]
+colReg=['34','31','31','31','33','35','35','36','34']
 loopLines = list()
 loopNames = list()
 condLines = list()
@@ -42,6 +43,8 @@ def ColoreaWithUs(linea):
 			line="\033[0;"+colReg[num]+"m"+eMatch[0]+"\033[0;m "+eMatch[1]+"\033[0;"+colReg[num]+"m "+eMatch[2]+"\033[0;m "+eMatch[3]+"\033[0;"+colReg[num]+"m "+eMatch[4]+"\033[0;m "+ColoreaWithUs(eMatch[5])
 		elif num==6:
 			line="\033[0;"+colReg[num]+"m"+eMatch[0]+"\033[0;m "+eMatch[1]
+		elif num==8:
+			line="\033[0;"+colReg[num]+"m"+eMatch[0]+"\033[0;m "+ColoreaWithUs(eMatch[1])
 		return line
 	else:
 		return linea
@@ -73,6 +76,9 @@ def detTypeOfExpr(sLine):
 	elif re.match(expRegular[7],sLine):
 		eMatch = re.match(expRegular[7], sLine)
 		return (eMatch.groups(),7)
+	elif re.match(expRegular[8],sLine):
+		eMatch = re.match(expRegular[8], sLine)
+		return (eMatch.groups(),8)
 	return (None,-1)
 
 def CheckExpr(sLine,fOp): #Group 2 is first operand, group 3 is the rest
@@ -90,8 +96,8 @@ def CheckExpr(sLine,fOp): #Group 2 is first operand, group 3 is the rest
 				return False
 		if CheckExpr(eMatch[1],fOp) is False:
 			return False
-	else :
-		if sLine=='' or re.match(vOCRegex,sLine).group(1)!=sLine:
+	elif re.match(vOCRegex,sLine) is not None :
+		if re.match(vOCRegex,sLine).group(1)!=sLine:
 			return False
 	if(fOp==True):
 		return False
