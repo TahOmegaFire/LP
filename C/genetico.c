@@ -70,7 +70,7 @@ void* generarSolucion(int n)
 	head->next = NULL;
 	setNodo(head);
 	listaE* cur = head;
-	
+
 	for(int i = 1; i < n; ++i)
 	{
 		listaE* newEn = (listaE*)malloc(sizeof(listaE));
@@ -151,7 +151,7 @@ void cruceMedio(void* Lista1, void* Lista2)
 		++c;
 		ptr = ptr->next;
 	}
-	
+
 	c /= 2;
 
 	ptr = (listaE*)Lista1;
@@ -204,12 +204,12 @@ void mutacionRand(void* Lista)
 		++c;
 		ptr = ptr->next;
 	}
-	
+
 	c = (rand() % c);
 	ptr = head;
 	for(int i = 0; i < c; ++i)
 		ptr = ptr->next;
-	
+
 	unsigned char tipo = rand() % 3;
 	if(tipo == 0)
 	{
@@ -243,7 +243,7 @@ void mutacionTipo(void* Lista)
 		++c;
 		ptr = ptr->next;
 	}
-	
+
 	c = (rand() % c);
 	ptr = head;
 	for(int i = 0; i < c; ++i)
@@ -251,10 +251,10 @@ void mutacionTipo(void* Lista)
 
 	/*if(((char)ptr->m_Nodo.tipo) == 'i')
 		(*(int *)ptr->m_Nodo.dato) = rand() % 10;
-		
+
 	else if(((char)ptr->m_Nodo.tipo) == 'c')
 		(*(char *)ptr->m_Nodo.dato) = 65 + rand() % 6;
-	
+
 	else if(((char)ptr->m_Nodo.tipo) == 'b')
 		(*(bool *)ptr->m_Nodo.dato) = !(*(bool *)ptr->m_Nodo.dato);*/
 
@@ -275,4 +275,83 @@ void mutacionTipo(void* Lista)
 	default:
 		break;
 	}
+}
+
+int valor(void* Lista)
+{
+	listaE* cur = (listaE*) Lista;
+	if (cur->m_Nodo.tipo == 'c')
+		return sizeof(char)*2;
+	if(cur->m_Nodo.tipo == 'b')
+			return sizeof(bool);
+	if(cur->m_Nodo.tipo == 'i')
+			return sizeof(int);
+}
+
+int evaluacionLista(int (*fun)(void*), void* Lista)
+{
+	listaE* cur = (listaE*) Lista;
+	int val=0;
+	while (cur->next != NULL)
+	{
+		val+=(*fun)(cur);
+		cur=cur->next;
+	}
+	val+=(*fun)(cur);
+	return val;
+}
+void* reemplazar(void* list1, void* listn1)
+{
+	borrar(list1);
+	return listn1;
+}
+void genetico(void (*muta)(void*), void(*cruce)(void*,void*),int n, int iteraciones)
+{
+	void* list1 = generarSolucion(n);
+	void* list2 = generarSolucion(n);
+	int val_1,val_2,val_n1,val_n2;
+	while (iteraciones > 0)
+	{
+		val_1=evaluacionLista(valor,list1);
+		val_2=evaluacionLista(valor,list2);
+		void* listn1 = copiar(list1);
+		void* listn2 = copiar(list2);
+		(*cruce)(listn1,listn2);
+		val_n1=evaluacionLista(valor,listn1);
+		val_n2=evaluacionLista(valor,listn2);
+		if (val_1 < val_n1)
+		{
+			list1=reemplazar(list1,listn1);
+			val_1=val_n1;
+		} else
+			borrar(listn1);
+		if (val_2 < val_n2) {
+			list2=reemplazar(list2,listn2);
+			val_2=val_n2;
+		} else
+			borrar(listn2);
+		listn1 = copiar(list1);
+		listn2 = copiar(list2);
+		(*muta)(listn1);
+		(*muta)(listn2);
+		val_n1=evaluacionLista(valor,listn1);
+		val_n2=evaluacionLista(valor,listn2);
+		if (val_1 < val_n1)
+		{
+			list1=reemplazar(list1,listn1);
+			val_1=val_n1;
+		} else
+			borrar(listn1);
+		if (val_2 < val_n2) {
+			list2=reemplazar(list2,listn2);
+			val_2=val_n2;
+		} else
+			borrar(listn2);
+		iteraciones--;
+	}
+	printf("lista1 con puntaje %d\n",val_1);
+	imprimirSolucion(list1);
+	printf("\n\n");
+	printf("lista2 con puntaje %d\n",val_2);
+	imprimirSolucion(list2);
 }
