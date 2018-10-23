@@ -182,7 +182,7 @@ void cruceIntercalado(void* Lista1, void* Lista2)
 
 	for(int i = 0; i < c; ++i)
 	{
-		if(i % 2 == 0)
+		if(i % 2 == 1)
 		{
 			tNodo temp = ptr->m_Nodo;
 			ptr->m_Nodo = ptr2->m_Nodo;
