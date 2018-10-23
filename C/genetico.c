@@ -53,14 +53,14 @@ void setNodo(listaE* h)
 	{
 		h->m_Nodo.tipo = 'c';
 		h->m_Nodo.dato = malloc(sizeof(char*));
-		(*(int *)h->m_Nodo.dato) = 65 + rand() % 6;
+		(*(char *)h->m_Nodo.dato) = 65 + rand() % 6;
 	}
 
 	else if(tipo == 2)
 	{
 		h->m_Nodo.tipo = 'b';
 		h->m_Nodo.dato = malloc(sizeof(bool*));
-		(*(int *)h->m_Nodo.dato) = rand() % 2;
+		(*(bool *)h->m_Nodo.dato) = rand() % 2;
 	}
 }
 
@@ -164,5 +164,115 @@ void cruceMedio(void* Lista1, void* Lista2)
 		ptr2->m_Nodo = temp;
 		ptr = ptr->next;
 		ptr2 = ptr2->next;
+	}
+}
+
+void cruceIntercalado(void* Lista1, void* Lista2)
+{
+	int c = 1;
+	listaE* ptr = (listaE*)Lista1;
+	while(ptr->next != NULL)
+	{
+		++c;
+		ptr = ptr->next;
+	}
+
+	ptr = (listaE*)Lista1;
+	listaE* ptr2 = (listaE*)Lista2; //I dunno how else to do this lmao
+
+	for(int i = 0; i < c; ++i)
+	{
+		if(i % 2 == 0)
+		{
+			tNodo temp = ptr->m_Nodo;
+			ptr->m_Nodo = ptr2->m_Nodo;
+			ptr2->m_Nodo = temp;
+		}
+		ptr = ptr->next;
+		ptr2 = ptr2->next;
+
+	}
+}
+
+void mutacionRand(void* Lista)
+{
+	listaE* head = (listaE*)Lista;
+	listaE* ptr = head;
+	int c = 1;
+	while(ptr->next != NULL)
+	{
+		++c;
+		ptr = ptr->next;
+	}
+	
+	c = (rand() % c);
+	ptr = head;
+	for(int i = 0; i < c; ++i)
+		ptr = ptr->next;
+	
+	unsigned char tipo = rand() % 3;
+	if(tipo == 0)
+	{
+		ptr->m_Nodo.tipo = 'i';
+		ptr->m_Nodo.dato = realloc(ptr->m_Nodo.dato, sizeof(int*));
+		(*(int *)ptr->m_Nodo.dato) = rand() % 10;
+	}
+
+	else if(tipo == 1)
+	{
+		ptr->m_Nodo.tipo = 'c';
+		ptr->m_Nodo.dato = realloc(ptr->m_Nodo.dato, sizeof(char*));
+		(*(char *)ptr->m_Nodo.dato) = 65 + rand() % 6;
+	}
+
+	else if(tipo == 2)
+	{
+		ptr->m_Nodo.tipo = 'b';
+		ptr->m_Nodo.dato = realloc(ptr->m_Nodo.dato, sizeof(bool*));
+		(*(bool *)ptr->m_Nodo.dato) = rand() % 2;
+	}
+}
+
+void mutacionTipo(void* Lista)
+{
+	listaE* head = (listaE*)Lista;
+	listaE* ptr = head;
+	int c = 1;
+	while(ptr->next != NULL)
+	{
+		++c;
+		ptr = ptr->next;
+	}
+	
+	c = (rand() % c);
+	ptr = head;
+	for(int i = 0; i < c; ++i)
+		ptr = ptr->next;
+
+	/*if(((char)ptr->m_Nodo.tipo) == 'i')
+		(*(int *)ptr->m_Nodo.dato) = rand() % 10;
+		
+	else if(((char)ptr->m_Nodo.tipo) == 'c')
+		(*(char *)ptr->m_Nodo.dato) = 65 + rand() % 6;
+	
+	else if(((char)ptr->m_Nodo.tipo) == 'b')
+		(*(bool *)ptr->m_Nodo.dato) = !(*(bool *)ptr->m_Nodo.dato);*/
+
+	switch(ptr->m_Nodo.tipo)
+	{
+	case 'i':
+		(*(int *)ptr->m_Nodo.dato) = rand() % 10;
+		break;
+
+	case 'c':
+		(*(char *)ptr->m_Nodo.dato) = 65 + rand() % 6;
+		break;
+
+	case 'b':
+		(*(bool *)ptr->m_Nodo.dato) = !(*(bool *)ptr->m_Nodo.dato);
+		break;
+
+	default:
+		break;
 	}
 }
