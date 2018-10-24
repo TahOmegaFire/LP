@@ -16,6 +16,13 @@ typedef struct listaE
 	struct listaE* next;
 } listaE;
 
+/*****
+* int valor(void* Lista)
+******
+* Funcion que evalua y devuelve un valor entero.
+******
+* void*: Puntero void que recibe cualquier tipo de dato, en este caso al tipo listaE
+*****/
 int valor(void* Lista)
 {
 	listaE* cur = (listaE*) Lista;
@@ -27,6 +34,15 @@ int valor(void* Lista)
 	return sizeof(int);
 }
 
+/*****
+* void copyNodo(listaE* nNodo , listaE* cNodo)
+******
+* Crea una copia de un nodo de una lista cNodo a otra lista nNodo
+******
+* Input:
+*		listaE* nNodo: Lista objetivo al cual se le va a insertar el nodo copiado.
+*		listaE* cNodo: Lista de donde se copia el nodo.
+*****/
 void copyNodo(listaE* nNodo, listaE* cNodo)
 {
 	nNodo->m_Nodo.tipo = cNodo->m_Nodo.tipo;
@@ -49,6 +65,14 @@ void copyNodo(listaE* nNodo, listaE* cNodo)
 	}
 }
 
+/*****
+* void setNodo(listaE* h)
+******
+* Inicializa el Nodo con valores aleatorios segun su tipo.
+******
+* Input:
+*		listaE* h: Nodo inicial con valores NULL.
+*****/
 void setNodo(listaE* h)
 {
 	h->m_Nodo.dato = NULL;
@@ -75,6 +99,16 @@ void setNodo(listaE* h)
 	}
 }
 
+/*****
+* void* generarSolucion(int n)
+******
+* Genera una lista enlazada de tamaño n  de valores con tipos aleatorios.
+******
+* Input:
+*		int n: Largode la lista enlazada.
+* Output:
+*		void* : Retorna un puntero void el cual apunta a la cabeza de la lista enlazada.
+*****/
 void* generarSolucion(int n)
 {
 	listaE* head = (listaE*)malloc(sizeof(listaE));
@@ -94,6 +128,16 @@ void* generarSolucion(int n)
 	return head;
 }
 
+/*****
+* void* copiar(void* Lista)
+******
+* Crea una copia de la lista y devuelve la direccion de memoria de la cabeza.
+******
+* Input:
+*		void* Lista: Recibe una lista enlazada de cualquier tipo.
+* Output:
+*		void* : Retorna un puntero void el cual apunta a la cabeza de la lista enlazada.
+*****/
 void* copiar(void* Lista)
 {
 	listaE* nHead = (listaE*)malloc(sizeof(listaE));
@@ -118,6 +162,14 @@ void* copiar(void* Lista)
 	return nHead;
 }
 
+/*****
+* void borrar(void* Lista)
+******
+* Libera la memoria utilizada por la lista enlazada.
+******
+* Input:
+*		void* Lista: Puntero que apunta a la cabeza de la lista enlazada.
+*****/
 void borrar(void* Lista)
 {
 	free(((listaE*)Lista)->m_Nodo.dato);
@@ -129,7 +181,14 @@ void borrar(void* Lista)
 
 	free(Lista);
 }
-
+/*****
+* void imprimirSolucion(void* Lista)
+******
+* Imprime la lista enlazada en tuplas de la forma (valor, tipo)
+******
+* Input:
+*		void* Lista: Puntero que apunta a la cabeza de la lista enlazada.
+*****/
 void imprimirSolucion(void* Lista)
 {
 	listaE* cur = (listaE*)Lista;
@@ -153,6 +212,15 @@ void imprimirSolucion(void* Lista)
 		printf("(%d, b)\n", *(bool*)cur->m_Nodo.dato);
 }
 
+/*****
+* void cruceMedio(void* Lista1, void* Lista2)
+******
+* Intercambia la seccion de los primeros n/2 elementos de la Lista1 por los de la Lista2.
+******
+* Input:
+*		void* Lista1: Puntero que apunta a la cabeza de la lista enlazada, puede ser de cualquier tipo.
+*		void* Lista2: Puntero que apunta a la cabeza de la lista enlazada, puede ser de cualquier tipo.
+*****/
 void cruceMedio(void* Lista1, void* Lista2)
 {
 	int c = 1;
@@ -178,6 +246,15 @@ void cruceMedio(void* Lista1, void* Lista2)
 	}
 }
 
+/*****
+* void cruceIntercalado(void* Lista1, void* Lista2)
+******
+* Intercambia los elementos que se encuentren en posiciones pares entre las listas.
+******
+* Input:
+*		void* Lista1: Puntero que apunta a la cabeza de la lista enlazada, puede ser de cualquier tipo.
+*		void* Lista2: Puntero que apunta a la cabeza de la lista enlazada, puede ser de cualquier tipo.
+*****/
 void cruceIntercalado(void* Lista1, void* Lista2)
 {
 	int c = 1;
@@ -205,6 +282,14 @@ void cruceIntercalado(void* Lista1, void* Lista2)
 	}
 }
 
+/*****
+* void mutacionRand(void* Lista)
+******
+* Selecciona un elemento de la lista aleatoriamente y lo reemplaza por otro al azar.
+******
+* Input:
+*		void* Lista: Puntero que apunta a la cabeza de la lista enlazada, puede ser de cualquier tipo.
+*****/
 void mutacionRand(void* Lista)
 {
 	listaE* head = (listaE*)Lista;
@@ -244,6 +329,14 @@ void mutacionRand(void* Lista)
 	}
 }
 
+/*****
+* void mutacionTipo(void* Lista)
+******
+* Selecciona un elemento de la lista aleatoriamente y lo reemplaza por otro valor al azar del mismo TIPO.
+******
+* Input:
+*		void* Lista: Puntero que apunta a la cabeza de la lista enlazada, puede ser de cualquier tipo.
+*****/
 void mutacionTipo(void* Lista)
 {
 	listaE* head = (listaE*)Lista;
@@ -280,7 +373,17 @@ void mutacionTipo(void* Lista)
 }
 
 
-
+/*****
+* int evaluacionLista(int (*fun)(void*), void* Lista)
+******
+* Aplica una función de evaluacion sobre cada uno de los nodos de la lista enlazada.
+******
+* Input:
+*		int (*fun)(void*): Es un puntero a la funcion de evaluacion el cual se utilizara para evaluar cada nodo de la lista enlazada.
+*		void* Lista: Puntero que apunta a la cabeza de la lista enlazada, puede ser de cualquier tipo.
+*	Output:
+*		int: Debe retornar un valor entero el cual corresponde al valor de la lista enlazada.
+*****/
 int evaluacionLista(int (*fun)(void*), void* Lista)
 {
 	listaE* cur = (listaE*) Lista;
@@ -293,12 +396,21 @@ int evaluacionLista(int (*fun)(void*), void* Lista)
 	val+=(*fun)(cur);
 	return val;
 }
-void* reemplazar(void* list1, void* listn1)
-{
-	borrar(list1);
-	return listn1;
-}
-void genetico(void (*muta)(void*), void(*cruce)(void*,void*),int n, int iteraciones)
+
+/*****
+* void genetico(void (*muta)(void*), void (*cruce)(void*,void*), int n, int iteraciones)
+******
+* En primer lugar se generan dos listas padres, los cuales son evaluados con una funcion dada para obtener su calidad. Luego se aplican cruces y mutaciones para
+* así obtener dos listas hijos y verificar si estos tienen mayor calidad que la de los padres. Realizando lo anterior iteradas veces se obtienen
+* las dos listas con mayor calidad.
+******
+* Input:
+*		void (*muta)(void*) : Es un puntero a la funcion mutacion el cual se utilizara para mutar una lista enlazada.
+*		void (*cruce)(void*, void*): Es un puntero a la funcion de cruce el cual se utilizara para cruzar dos listas enlazadas.
+*		int n: Tamaño de la lista enlazada.
+*		int iteraciones: Cantidad de veces que se va a repeter el procedimiento.
+*****/
+void genetico(void (*muta)(void*), void (*cruce)(void*,void*),int n, int iteraciones)
 {
 	void* list1 = generarSolucion(n);
 	void* list2 = generarSolucion(n);
