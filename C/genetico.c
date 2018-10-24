@@ -16,6 +16,17 @@ typedef struct listaE
 	struct listaE* next;
 } listaE;
 
+int valor(void* Lista)
+{
+	listaE* cur = (listaE*) Lista;
+	if (cur->m_Nodo.tipo == 'c')
+		return sizeof(char)*2;
+	if(cur->m_Nodo.tipo == 'b')
+		return sizeof(bool);
+	
+	return sizeof(int);
+}
+
 void copyNodo(listaE* nNodo, listaE* cNodo)
 {
 	nNodo->m_Nodo.tipo = cNodo->m_Nodo.tipo;
@@ -249,15 +260,6 @@ void mutacionTipo(void* Lista)
 	for(int i = 0; i < c; ++i)
 		ptr = ptr->next;
 
-	/*if(((char)ptr->m_Nodo.tipo) == 'i')
-		(*(int *)ptr->m_Nodo.dato) = rand() % 10;
-
-	else if(((char)ptr->m_Nodo.tipo) == 'c')
-		(*(char *)ptr->m_Nodo.dato) = 65 + rand() % 6;
-
-	else if(((char)ptr->m_Nodo.tipo) == 'b')
-		(*(bool *)ptr->m_Nodo.dato) = !(*(bool *)ptr->m_Nodo.dato);*/
-
 	switch(ptr->m_Nodo.tipo)
 	{
 	case 'i':
@@ -277,16 +279,7 @@ void mutacionTipo(void* Lista)
 	}
 }
 
-int valor(void* Lista)
-{
-	listaE* cur = (listaE*) Lista;
-	if (cur->m_Nodo.tipo == 'c')
-		return sizeof(char)*2;
-	if(cur->m_Nodo.tipo == 'b')
-			return sizeof(bool);
-	if(cur->m_Nodo.tipo == 'i')
-			return sizeof(int);
-}
+
 
 int evaluacionLista(int (*fun)(void*), void* Lista)
 {
