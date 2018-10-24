@@ -6,6 +6,6 @@
 int main()
 {
 	srand(time(NULL));
-	genetico(mutacionRand,cruceIntercalado,5,4);
+	genetico(mutacionRand,cruceIntercalado,5,5);
 	return 0;
 }
