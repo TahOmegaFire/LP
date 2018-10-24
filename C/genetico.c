@@ -323,15 +323,11 @@ void genetico(void (*muta)(void*), void(*cruce)(void*,void*),int n, int iteracio
 		{
 			list1=reemplazar(list1,listn1);
 			val_1=val_n1;
-		} else
-			borrar(listn1);
+		}
 		if (val_2 < val_n2) {
 			list2=reemplazar(list2,listn2);
 			val_2=val_n2;
-		} else
-			borrar(listn2);
-		listn1 = copiar(list1);
-		listn2 = copiar(list2);
+		}
 		(*muta)(listn1);
 		(*muta)(listn2);
 		val_n1=evaluacionLista(valor,listn1);
@@ -340,13 +336,13 @@ void genetico(void (*muta)(void*), void(*cruce)(void*,void*),int n, int iteracio
 		{
 			list1=reemplazar(list1,listn1);
 			val_1=val_n1;
-		} else
-			borrar(listn1);
+		}
+		borrar(listn1);
 		if (val_2 < val_n2) {
 			list2=reemplazar(list2,listn2);
 			val_2=val_n2;
-		} else
-			borrar(listn2);
+		}
+		borrar(listn2);
 		iteraciones--;
 	}
 	printf("lista1 con puntaje %d\n",val_1);
