@@ -1,6 +1,6 @@
 C = gcc
 CFLAGS = -std=c11 -g
-TARGET = bin/
+TARGET = bin/genetico.out
 SRC = $(addprefix src/, main.c genetico.c)
 
 all : $(SRC)
