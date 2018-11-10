@@ -25,7 +25,7 @@ public class Juego
 			if(sel > 0 && sel < 5) break;
 		}
 		
-		Clase clase;
+		Clase clase = null;
 		switch(sel)
 		{
 			case 1:
@@ -53,7 +53,7 @@ public class Juego
 			if(sel > 0 && sel < 5) break;
 		}
 
-		Raza raza;
+		Raza raza = null;
 		switch(sel)
 		{
 			case 1:

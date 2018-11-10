@@ -12,7 +12,7 @@ public class Clerigo extends Clase
 		super.armadura = 15;
 	}
 
-	public void ataque(Personaje enemigo)
+	public void ataque(Personaje enemigo, Personaje yo)
 	{
 		int dmg = Juego.lanzarDados(6);
 		int evade = 0;
