@@ -99,9 +99,9 @@ public class Juego
 				default:
 					break;
 			}
-			while(jugador.GetVida() > 0 || enemigo.GetVida() > 0)
-			{	
-				jugador.setDefiende(0);
+			while(jugador.getVida() > 0 || enemigo.getVida() > 0)
+			{
+				jugador.getClase().setDefiende(false);
 				System.out.print("\n\nElige tu accion:\n1.- Atacar    2.- Defender\n");
 				sel = 0;
 				while(sel == 0)
@@ -113,24 +113,31 @@ public class Juego
 						sel = 0;
 					}
 				}
-
-				if(sel == 1)
+				System.out.print("\n\n"+jugador.getNombre()+": "+jugador.getVida()+"     "+enemigo.getNombre()+": "+enemigo.getVida());
+				if(sel == 1){
 					jugador.getClase().ataque(enemigo, jugador);
-
-				else
-					jugador.getClase().setDefiende(1);
-
-				enemigo.getClase().setDefiende(0);
+					System.out.print("\n\n "+jugador.getNombre()+ " se prepara para Atacar!!");
+				}
+				else{
+					jugador.getClase().setDefiende(true);
+					System.out.print("\n\n "+jugador.getNombre()+ " se prepara para Defender!");
+				}
+				enemigo.getClase().setDefiende(false);
 				sel = lanzarDados(2);
-
-				if(sel == 1)
+				System.out.print("\n\n"+jugador.getNombre()+": "+jugador.getVida()+"     "+enemigo.getNombre()+": "+enemigo.getVida());
+				if(sel == 1){
 					enemigo.getClase().ataque(jugador, enemigo);
-				else
-					enemigo.getClase().setDefiende(1);
+					System.out.print("\n\n "+enemigo.getNombre()+ " se prepara para Atacar!!");
+				}
+				else{
+					enemigo.getClase().setDefiende(true);
+					System.out.print("\n\n "+enemigo.getNombre()+ " se prepara para Defender!");
+				}
+				System.out.print("\n\n"+jugador.getNombre()+": "+jugador.getVida()+"     "+enemigo.getNombre()+": "+enemigo.getVida());
 
 			}
 
-			if(jugador.GetVida() < 0)
+			if(jugador.getVida() < 0)
 			{
 				System.out.print("\n\nLa cuerda de la profecia ha sido cortado, y con ella tu vida. F\n");
 				break;

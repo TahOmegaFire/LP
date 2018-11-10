@@ -10,4 +10,5 @@ public interface Personaje
 	public void setVida(int vida);
 	public Clase getClase();
 	public Raza getRaza();
+	public String getNombre();
 }

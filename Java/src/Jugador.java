@@ -7,7 +7,7 @@ public class Jugador implements Personaje
 	String nombre;
 
 	int vida;
-	
+
 	public Jugador(String nombre, Raza raza, Clase clase)
 	{
 		asignarNombre(nombre);
@@ -41,6 +41,7 @@ public class Jugador implements Personaje
 	public int getVida() { return vida; }
 	public Raza getRaza() { return raza; }
 	public Clase getClase() { return clase; }
+	public String getNombre() { return this.nombre; }
 
 	public void setVida(int nVida) { this.vida = nVida; }
 }
