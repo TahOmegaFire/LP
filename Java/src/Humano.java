@@ -1,0 +1,21 @@
+package juego;
+
+public class Humano extends Raza
+{
+	public Humano()
+	{
+		crearRaza();
+	}
+
+	public void crearRaza()
+	{
+		super.fuerza = 1;
+		super.destreza = 1;
+		super.constitucion = 1;
+	}
+
+	public void Habilidad()
+	{
+
+	}
+}

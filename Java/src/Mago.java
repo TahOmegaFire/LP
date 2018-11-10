@@ -1,0 +1,35 @@
+package juego;
+
+public class Mago extends Clase
+{
+	public Mago()
+	{
+		crearClase();
+	}
+
+	public void crearClase()
+	{
+		super.armadura = 10;
+	}
+
+	public void ataque(Personaje enemigo)
+	{
+		int dmg = Juego.lanzarDados(6);
+		int evade = 0;
+		if(enemigo.clase.getDefiende() == true)
+		{
+			evade = Juego.lanzarDados(20);
+			nEvade = Juego.lanzarDados(20);
+			if(nEvade > evade) evade = nEvade;
+		}
+		else evade = Juego.lanzarDados(20);
+
+		if(evade + enemigo.clase.getDestreza() >= 13) { dmg /= 2; }
+		enemigo.setVida(enemigo.getVida() - dmg);
+	}
+
+	public void defender()
+	{
+		setDefiende(true);
+	}
+}
