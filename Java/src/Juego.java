@@ -99,9 +99,9 @@ public class Juego
 				default:
 					break;
 			}
-			while(jugador.GetVida() > 0 || enemigo.GetVida() > 0)
+			while(jugador.getVida() > 0 || enemigo.getVida() > 0)
 			{	
-				jugador.setDefiende(0);
+				jugador.getClase().setDefiende(false);
 				System.out.print("\n\nElige tu accion:\n1.- Atacar    2.- Defender\n");
 				sel = 0;
 				while(sel == 0)
@@ -118,19 +118,19 @@ public class Juego
 					jugador.getClase().ataque(enemigo, jugador);
 
 				else
-					jugador.getClase().setDefiende(1);
+					jugador.getClase().setDefiende(true);
 
-				enemigo.getClase().setDefiende(0);
+				enemigo.getClase().setDefiende(false);
 				sel = lanzarDados(2);
 
 				if(sel == 1)
 					enemigo.getClase().ataque(jugador, enemigo);
 				else
-					enemigo.getClase().setDefiende(1);
+					enemigo.getClase().setDefiende(true);
 
 			}
 
-			if(jugador.GetVida() < 0)
+			if(jugador.getVida() < 0)
 			{
 				System.out.print("\n\nLa cuerda de la profecia ha sido cortado, y con ella tu vida. F\n");
 				break;
