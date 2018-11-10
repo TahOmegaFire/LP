@@ -1,4 +1,4 @@
-package juego;
+package src;
 
 public abstract class Raza
 {

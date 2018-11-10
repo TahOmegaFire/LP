@@ -1,6 +1,6 @@
-package juego;
+package src;
 
-public abstract class Jugador implements Personaje
+public class Jugador implements Personaje
 {
 	Clase clase;
 	Raza raza;
@@ -8,14 +8,12 @@ public abstract class Jugador implements Personaje
 
 	int vida;
 	
-	public void Jugador(String nombre, Raza raza, Clase clase)
+	public Jugador(String nombre, Raza raza, Clase clase)
 	{
-		this.nombre = nombre;
-		this.raza = raza;
-		this.clase = clase;
-
-		this.clase.crearClase();
-		this.raza.crearRaza();
+		asignarNombre(nombre);
+		asignarClase(clase);
+		asignarRaza(raza);
+		asignarVida();
 	}
 
 	public void asignarRaza(Raza raza)
@@ -41,8 +39,8 @@ public abstract class Jugador implements Personaje
 	}
 
 	public int getVida() { return vida; }
+	public Raza getRaza() { return raza; }
+	public Clase getClase() { return clase; }
 
 	public void setVida(int nVida) { this.vida = nVida; }
-
-
 }

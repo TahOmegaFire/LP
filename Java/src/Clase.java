@@ -1,4 +1,4 @@
-package juego;
+package src;
 
 public abstract class Clase
 {
@@ -11,7 +11,7 @@ public abstract class Clase
 	}
 
 	public abstract void crearClase();
-	public abstract void ataque();
+	public abstract void ataque(Personaje enemigo);
 	public abstract void defender();
 
 	public int getArmadura() { return armadura; }

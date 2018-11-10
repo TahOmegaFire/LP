@@ -1,4 +1,4 @@
-package juego;
+package src;
 
 public class Picaro extends Clase
 {
@@ -16,15 +16,15 @@ public class Picaro extends Clase
 	{
 		int dmg = Juego.lanzarDados(8);
 		int hit = 0;
-		if(enemigo.clase.getDefiende == true)
+		if(enemigo.getClase().getDefiende() == true)
 		{
 			hit = Juego.lanzarDados(20);
-			nHit = Juego.lanzarDados(20);
+			int nHit = Juego.lanzarDados(20);
 			if(nHit < hit) hit = nHit;
 		}
 		else hit = Juego.lanzarDados(20);
 
-		if(hit + this.destreza >= enemigo.clase.getArmadura()) { enemigo.setVida(enemigo.getVida() - dmg); }
+		if(hit + this.destreza >= enemigo.getClase().getArmadura()) { enemigo.setVida(enemigo.getVida() - dmg); }
 	}
 
 	public void defender()

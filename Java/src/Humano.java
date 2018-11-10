@@ -1,4 +1,4 @@
-package juego;
+package src;
 
 public class Humano extends Raza
 {
@@ -13,7 +13,7 @@ public class Humano extends Raza
 		super.destreza = 1;
 		super.constitucion = 1;
 	}
-
+	
 	public void Habilidad()
 	{
 

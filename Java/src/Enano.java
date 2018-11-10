@@ -1,4 +1,4 @@
-package juego;
+package src;
 
 public class Enano extends Raza
 {
@@ -14,8 +14,7 @@ public class Enano extends Raza
 		super.constitucion = 2;
 	}
 
-	public int Habilidad(int vida)
+	public void Habilidad()
 	{
-		return vida + 1;
 	}
 }
