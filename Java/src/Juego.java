@@ -10,7 +10,7 @@ public class Juego
 
 	public static int lanzarDados(int caras)
 	{
-		return rObj.nextInt(caras);
+		return rObj.nextInt(caras) + 1;
 	}
 
 	public static void main(String[] args)
@@ -74,8 +74,8 @@ public class Juego
 
 		Jugador jugador = new Jugador(nombre, raza, clase);
 		Enemigo enemigo = null;
-		for(int i=0; i<3,){
-			int n = lanzarDados(6)+1; // Obtiene un numero al azar para elegir un contrincante
+		for(int i=0; i<3;){
+			int n = lanzarDados(6); // Obtiene un numero al azar para elegir un contrincante
 			switch(n)
 			{
 				case 1:
@@ -98,10 +98,56 @@ public class Juego
 					break;
 				default:
 					break;
-					jugador.setDefiende(0);
 			}
-			n = lanzarDados(20);
+			while(jugador.GetVida() > 0 || enemigo.GetVida() > 0)
+			{	
+				jugador.setDefiende(0);
+				System.out.print("\n\nElige tu accion:\n1.- Atacar    2.- Defender\n");
+				sel = 0;
+				while(sel == 0)
+				{
+					sel = inp.nextInt();
+					if(sel != 1 && sel != 2)
+					{
+						System.out.print("\nEleccion no valida\n");
+						sel = 0;
+					}
+				}
 
+				if(sel == 1)
+					jugador.getClase().ataque(enemigo, jugador);
+
+				else
+					jugador.getClase().setDefiende(1);
+
+				enemigo.getClase().setDefiende(0);
+				sel = lanzarDados(2);
+
+				if(sel == 1)
+					enemigo.getClase().ataque(jugador, enemigo);
+				else
+					enemigo.getClase().setDefiende(1);
+
+			}
+
+			if(jugador.GetVida() < 0)
+			{
+				System.out.print("\n\nLa cuerda de la profecia ha sido cortado, y con ella tu vida. F\n");
+				break;
+			}
+
+			else
+			{
+				if(i < 2)
+				{
+					System.out.print("\n\nTu enemigo fue eliminado. Preparate para el siguiente encuentro\n");
+					++i;
+				}
+
+				else
+					System.out.print("\n\nTodos tus enemigos han sido vencidos. Has encontrado la fuente de la eterna subscripcion a RuneScape\n");
+
+			}
 		}
 	}
 }
