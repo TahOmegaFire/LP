@@ -73,30 +73,35 @@ public class Juego
 		}
 
 		Jugador jugador = new Jugador(nombre, raza, clase);
-		int n = lanzarDados(6)+1; // Obtiene un numero al azar para elegir un contrincante
 		Enemigo enemigo = null;
-		switch(n)
-		{
-			case 1:
-				enemigo = new Enemigo("Klrak", new src.Enano(), new src.Barbaro());
-				break;
-			case 2:
-				enemigo = new Enemigo("Adran", new src.Elfo(), new src.Picaro());
-				break;
-			case 3:
-				enemigo = new Enemigo("Isaac", new src.Humano(), new src.Clerigo());
-				break;
-			case 4:
-				enemigo = new Enemigo("Elysium", new src.Elfo(), new src.Mago());
-				break;
-			case 5:
-				enemigo = new Enemigo("Krrogh", new src.Orco(), new src.Barbaro());
-				break;
-			case 6:
-				enemigo = new Enemigo("Jenkins", new src.Humano(), new src.Mago());
-				break;
-			default:
-				break;
+		for(int i=0; i<3,){
+			int n = lanzarDados(6)+1; // Obtiene un numero al azar para elegir un contrincante
+			switch(n)
+			{
+				case 1:
+					enemigo = new Enemigo("Klrak", new src.Enano(), new src.Barbaro());
+					break;
+				case 2:
+					enemigo = new Enemigo("Adran", new src.Elfo(), new src.Picaro());
+					break;
+				case 3:
+					enemigo = new Enemigo("Isaac", new src.Humano(), new src.Clerigo());
+					break;
+				case 4:
+					enemigo = new Enemigo("Elysium", new src.Elfo(), new src.Mago());
+					break;
+				case 5:
+					enemigo = new Enemigo("Krrogh", new src.Orco(), new src.Barbaro());
+					break;
+				case 6:
+					enemigo = new Enemigo("Jenkins", new src.Humano(), new src.Mago());
+					break;
+				default:
+					break;
+					jugador.setDefiende(0);
+			}
+			n = lanzarDados(20);
+
 		}
 	}
 }
