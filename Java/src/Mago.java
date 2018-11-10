@@ -10,6 +10,7 @@ public class Mago extends Clase
 	public void crearClase()
 	{
 		super.armadura = 10;
+		setNombre("Mago");
 	}
 
 	public void ataque(Personaje enemigo, Personaje yo)

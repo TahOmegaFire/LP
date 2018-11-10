@@ -12,6 +12,7 @@ public class Elfo extends Raza
 		super.fuerza = 0;
 		super.destreza = 2;
 		super.constitucion = 1;
+		setNombre("Elfo");
 	}
 
 	public void Habilidad()

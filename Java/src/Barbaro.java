@@ -10,6 +10,7 @@ public class Barbaro extends Clase
 	public void crearClase()
 	{
 		super.armadura = 15;
+		setNombre("Barbaro");
 	}
 
 	public void ataque(Personaje enemigo, Personaje yo)

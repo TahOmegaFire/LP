@@ -12,6 +12,7 @@ public class Orco extends Raza
 		super.fuerza = 2;
 		super.destreza = 0;
 		super.constitucion = 1;
+		setNombre("Orco");
 	}
 
 	public void Habilidad()

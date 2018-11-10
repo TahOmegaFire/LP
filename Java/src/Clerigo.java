@@ -10,6 +10,7 @@ public class Clerigo extends Clase
 	public void crearClase()
 	{
 		super.armadura = 15;
+		setNombre("Clerigo");
 	}
 
 	public void ataque(Personaje enemigo, Personaje yo)

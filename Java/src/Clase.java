@@ -4,6 +4,7 @@ public abstract class Clase
 {
 	int armadura;
 	boolean defiende;
+	String nombre;
 
 	public Clase()
 	{
@@ -16,7 +17,9 @@ public abstract class Clase
 
 	public int getArmadura() { return armadura; }
 	public boolean getDefiende() { return defiende; }
+	public String getNombre() { return nombre; }
 	
 	public void setArmadura(int nArmadura) { this.armadura = nArmadura; }
 	public void setDefiende(boolean nDefiende) { this.defiende = nDefiende; }
+	public void setNombre(String nNombre) { this.nombre = nNombre; }
 }

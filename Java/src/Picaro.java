@@ -10,6 +10,7 @@ public class Picaro extends Clase
 	public void crearClase()
 	{
 		super.armadura = 10;
+		setNombre("Picaro");
 	}
 
 	public void ataque(Personaje enemigo, Personaje yo)

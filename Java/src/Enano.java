@@ -12,6 +12,7 @@ public class Enano extends Raza
 		super.fuerza = 1;
 		super.destreza = 0;
 		super.constitucion = 2;
+		setNombre("Enano");
 	}
 
 	public void Habilidad()

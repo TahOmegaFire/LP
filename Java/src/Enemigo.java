@@ -6,7 +6,7 @@ public class Enemigo implements Personaje {
 
 	int vida;
 
-	public Jugador(String nombre, Raza raza, Clase clase)
+	public Enemigo(String nombre, Raza raza, Clase clase)
 	{
 		asignarNombre(nombre);
 		asignarClase(clase);

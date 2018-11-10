@@ -12,6 +12,7 @@ public class Humano extends Raza
 		super.fuerza = 1;
 		super.destreza = 1;
 		super.constitucion = 1;
+		setNombre("Humano");
 	}
 	
 	public void Habilidad()
