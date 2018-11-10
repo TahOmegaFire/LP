@@ -99,7 +99,7 @@ public class Juego
 				default:
 					break;
 			}
-			while(jugador.getVida() > 0 || enemigo.getVida() > 0)
+			while(jugador.getVida() > 0 && enemigo.getVida() > 0)
 			{
 				jugador.getClase().setDefiende(false);
 				System.out.print("\n\nElige tu accion:\n1.- Atacar    2.- Defender\n");
@@ -152,7 +152,10 @@ public class Juego
 				}
 
 				else
+				{
 					System.out.print("\n\nTodos tus enemigos han sido vencidos. Has encontrado la fuente de la eterna subscripcion a RuneScape\n");
+					break;
+				}
 
 			}
 		}
