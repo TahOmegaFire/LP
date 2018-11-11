@@ -1,5 +1,6 @@
 package src;
 import java.util.Random;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -15,6 +16,8 @@ public class Juego
 
 	public static void main(String[] args)
 	{
+		System.out.print("\033[H\033[2J");
+		System.out.flush();
 		System.out.print("Bienvenido a Dunyons & Doragons XVI! Elige un nombre para tu personaje\n");
 		String nombre = inp.next();
 		int sel = 0;
@@ -52,7 +55,8 @@ public class Juego
 	   		sel = inp.nextInt();
 			if(sel > 0 && sel < 5) break;
 		}
-
+		System.out.print("\033[H\033[2J");
+		System.out.flush();
 		Raza raza = null;
 		switch(sel)
 		{
@@ -73,56 +77,69 @@ public class Juego
 		}
 
 		Jugador jugador = new Jugador(nombre, raza, clase);
-		Enemigo enemigo = null;
+		List<Enemigo> enemigos = new ArrayList<Enemigo>();
+		enemigos.add(new Enemigo("Klrak", new src.Enano(), new src.Barbaro()));
+		enemigos.add(new Enemigo("Adran", new src.Elfo(), new src.Picaro()));
+		enemigos.add(new Enemigo("Isaac", new src.Humano(), new src.Clerigo()));
+		enemigos.add(new Enemigo("Elysium", new src.Elfo(), new src.Mago()));
+		enemigos.add(new Enemigo("Krrogh", new src.Orco(), new src.Barbaro()));
+		enemigos.add(new Enemigo("Jenkins", new src.Humano(), new src.Mago()));
+		int n = lanzarDados(6); // Obtiene un numero al azar para elegir un contrincante
+		Enemigo enemigo = (Enemigo) enemigos.get(n-1);
+		System.out.print("\nEncontrando Contrincante...");
+		System.out.print("\n\nEl "+jugador.getRaza().getNombre()+" "+jugador.getClase().getNombre()+" "+jugador.getNombre()+" se enfrentara a el "+enemigo.getRaza().getNombre()+" "+enemigo.getClase().getNombre()+" "+enemigo.getNombre());
+
 		for(int i=0; i<3;){
-			int n = lanzarDados(6); // Obtiene un numero al azar para elegir un contrincante
-			switch(n)
+			if(jugador.getVida() <= 0)
 			{
-				case 1:
-					enemigo = new Enemigo("Klrak", new src.Enano(), new src.Barbaro());
-					break;
-				case 2:
-					enemigo = new Enemigo("Adran", new src.Elfo(), new src.Picaro());
-					break;
-				case 3:
-					enemigo = new Enemigo("Isaac", new src.Humano(), new src.Clerigo());
-					break;
-				case 4:
-					enemigo = new Enemigo("Elysium", new src.Elfo(), new src.Mago());
-					break;
-				case 5:
-					enemigo = new Enemigo("Krrogh", new src.Orco(), new src.Barbaro());
-					break;
-				case 6:
-					enemigo = new Enemigo("Jenkins", new src.Humano(), new src.Mago());
-					break;
-				default:
-					break;
+				System.out.print("\n\nLa cuerda de la profecia ha sido cortado, y con ella tu vida. F\n");
+				break;
 			}
-			while(jugador.getVida() > 0 && enemigo.getVida() > 0)
+			else
 			{
-				jugador.getClase().setDefiende(false);
-				System.out.print("\n\nElige tu accion:\n1.- Atacar    2.- Defender\n");
-				sel = 0;
-				while(sel == 0)
-				{
-					sel = inp.nextInt();
-					if(sel != 1 && sel != 2)
+				if (enemigo.getVida() <= 0) {
+					if(i < 2)
 					{
-						System.out.print("\nEleccion no valida\n");
-						sel = 0;
+						System.out.print("\n\nTu enemigo fue eliminado. Preparate para el siguiente encuentro\n");
+						++i;
+						n = lanzarDados(6); // Obtiene un numero al azar para elegir un contrincante
+						enemigo = (Enemigo) enemigos.get(n-1);
+						enemigo.ResetPersonaje();
+						System.out.print("\n\nEncontrando Contrincante...");
+						System.out.print("\nEl "+jugador.getRaza().getNombre()+" "+jugador.getClase().getNombre()+" "+jugador.getNombre()+" se enfrentara a el "+enemigo.getRaza().getNombre()+" "+enemigo.getClase().getNombre()+" "+enemigo.getNombre());
+					}
+					else
+					{
+						System.out.print("\n\nTodos tus enemigos han sido vencidos. Has encontrado la fuente de la eterna subscripcion a RuneScape\n");
+						break;
 					}
 				}
-				System.out.print("\n\n"+jugador.getNombre()+": "+jugador.getVida()+"     "+enemigo.getNombre()+": "+enemigo.getVida());
-				if(sel == 1){
-					System.out.print("\n\n "+jugador.getNombre()+ " se prepara para Atacar!!\n");
-					jugador.getClase().ataque(enemigo, jugador);
+			}
+			jugador.getClase().setDefiende(false);
+			System.out.print("\n\nElige tu accion:\n1.- Atacar    2.- Defender\n");
+			sel = 0;
+			while(sel == 0)
+			{
+				sel = inp.nextInt();
+				if(sel != 1 && sel != 2)
+				{
+					System.out.print("\nEleccion no valida\n");
+					sel = 0;
 				}
-				else{
-					System.out.print("\n\n "+jugador.getNombre()+ " se prepara para Defender!\n");
-					jugador.getClase().setDefiende(true);
-				}
-				enemigo.getClase().setDefiende(false);
+			}
+			System.out.print("\033[H\033[2J");
+			System.out.flush();
+			System.out.print("\n\n"+jugador.getNombre()+": "+jugador.getVida()+"     "+enemigo.getNombre()+": "+enemigo.getVida());
+			if(sel == 1){
+				System.out.print("\n\n "+jugador.getNombre()+ " se prepara para Atacar!!\n");
+				jugador.getClase().ataque(enemigo, jugador);
+			}
+			else{
+				System.out.print("\n\n "+jugador.getNombre()+ " se prepara para Defender!\n");
+				jugador.getClase().setDefiende(true);
+			}
+			enemigo.getClase().setDefiende(false);
+			if(enemigo.getVida()>0){
 				sel = lanzarDados(2);
 				System.out.print("\n\n"+jugador.getNombre()+": "+jugador.getVida()+"     "+enemigo.getNombre()+": "+enemigo.getVida());
 				if(sel == 1){
@@ -134,29 +151,6 @@ public class Juego
 					enemigo.getClase().setDefiende(true);
 				}
 				System.out.print("\n\n"+jugador.getNombre()+": "+jugador.getVida()+"     "+enemigo.getNombre()+": "+enemigo.getVida());
-
-			}
-
-			if(jugador.getVida() < 0)
-			{
-				System.out.print("\n\nLa cuerda de la profecia ha sido cortado, y con ella tu vida. F\n");
-				break;
-			}
-
-			else
-			{
-				if(i < 2)
-				{
-					System.out.print("\n\nTu enemigo fue eliminado. Preparate para el siguiente encuentro\n");
-					++i;
-				}
-
-				else
-				{
-					System.out.print("\n\nTodos tus enemigos han sido vencidos. Has encontrado la fuente de la eterna subscripcion a RuneScape\n");
-					break;
-				}
-
 			}
 		}
 	}

@@ -17,5 +17,6 @@ public class Enano extends Raza
 
 	public void Habilidad()
 	{
+
 	}
 }

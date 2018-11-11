@@ -36,6 +36,7 @@ public class Enemigo implements Personaje {
 		this.nombre = nombre;
 	}
 
+	public void ResetPersonaje() { asignarVida();}
 	public int getVida() { return vida; }
 	public Raza getRaza() { return raza; }
 	public Clase getClase() { return clase; }
