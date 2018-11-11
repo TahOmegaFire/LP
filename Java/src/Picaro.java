@@ -25,7 +25,8 @@ public class Picaro extends Clase
 		}
 		else hit = Juego.lanzarDados(20);
 
-		if(hit + yo.getRaza().getDestreza() >= enemigo.getClase().getArmadura()) { enemigo.setVida(enemigo.getVida() - dmg); }
+		if(hit + yo.getRaza().getDestreza() >= enemigo.getClase().getArmadura()) { enemigo.setVida(enemigo.getVida() - dmg); System.out.print("La daga ha hecho "+dmg+" puntos de daño!"); }
+		else { System.out.print("La daga ha fallado su objetivo!"); }
 	}
 
 	public void defender()

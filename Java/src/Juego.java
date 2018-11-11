@@ -115,23 +115,23 @@ public class Juego
 				}
 				System.out.print("\n\n"+jugador.getNombre()+": "+jugador.getVida()+"     "+enemigo.getNombre()+": "+enemigo.getVida());
 				if(sel == 1){
+					System.out.print("\n\n "+jugador.getNombre()+ " se prepara para Atacar!!\n");
 					jugador.getClase().ataque(enemigo, jugador);
-					System.out.print("\n\n "+jugador.getNombre()+ " se prepara para Atacar!!");
 				}
 				else{
+					System.out.print("\n\n "+jugador.getNombre()+ " se prepara para Defender!\n");
 					jugador.getClase().setDefiende(true);
-					System.out.print("\n\n "+jugador.getNombre()+ " se prepara para Defender!");
 				}
 				enemigo.getClase().setDefiende(false);
 				sel = lanzarDados(2);
 				System.out.print("\n\n"+jugador.getNombre()+": "+jugador.getVida()+"     "+enemigo.getNombre()+": "+enemigo.getVida());
 				if(sel == 1){
+					System.out.print("\n\n "+enemigo.getNombre()+ " se prepara para Atacar!!\n");
 					enemigo.getClase().ataque(jugador, enemigo);
-					System.out.print("\n\n "+enemigo.getNombre()+ " se prepara para Atacar!!");
 				}
 				else{
+					System.out.print("\n\n "+enemigo.getNombre()+ " se prepara para Defender!\n");
 					enemigo.getClase().setDefiende(true);
-					System.out.print("\n\n "+enemigo.getNombre()+ " se prepara para Defender!");
 				}
 				System.out.print("\n\n"+jugador.getNombre()+": "+jugador.getVida()+"     "+enemigo.getNombre()+": "+enemigo.getVida());
 

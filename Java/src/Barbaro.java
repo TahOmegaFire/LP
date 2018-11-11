@@ -25,7 +25,8 @@ public class Barbaro extends Clase
 		}
 		else hit = Juego.lanzarDados(20);
 
-		if(hit + yo.getRaza().getFuerza() >= enemigo.getClase().getArmadura()) { enemigo.setVida(enemigo.getVida() - dmg); }
+		if(hit + yo.getRaza().getFuerza() >= enemigo.getClase().getArmadura()) { enemigo.setVida(enemigo.getVida() - dmg); System.out.print("La hacha ha hecho "+dmg+" puntos de daño!"); }
+		else { System.out.print("La hacha ha fallado!"); }
 	}
 
 	public void defender()

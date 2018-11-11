@@ -27,6 +27,7 @@ public class Mago extends Clase
 
 		if(evade + enemigo.getRaza().getDestreza() >= 13) { dmg /= 2; }
 		enemigo.setVida(enemigo.getVida() - dmg);
+		System.out.print("El hechizo ha hecho "+dmg+" puntos de daño!");
 	}
 
 	public void defender()

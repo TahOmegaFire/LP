@@ -27,6 +27,7 @@ public class Clerigo extends Clase
 
 		if(evade + enemigo.getRaza().getConstitucion() >= 13) { dmg /= 2; }
 		enemigo.setVida(enemigo.getVida() - dmg);
+		System.out.print("El ataque sagrado ha hecho "+dmg+" puntos de daño!");
 	}
 
 	public void defender()
