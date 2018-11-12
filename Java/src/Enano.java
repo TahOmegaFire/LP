@@ -15,8 +15,12 @@ public class Enano extends Raza
 		setNombre("Enano");
 	}
 
-	public void Habilidad()
+	public void Habilidad(Personaje personaje)
 	{
-
+		personaje.setVida(personaje.getVida()+1);
+	}
+	public int Habilidad (int n)
+	{
+		return n;
 	}
 }

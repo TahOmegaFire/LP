@@ -14,9 +14,15 @@ public class Humano extends Raza
 		super.constitucion = 1;
 		setNombre("Humano");
 	}
-	
-	public void Habilidad()
+
+	public void Habilidad(Personaje personaje)
 	{
 
+	}
+	public int Habilidad(int n){
+		while (n==1) {
+			n=Juego.lanzarDados(20);
+		}
+		return n;
 	}
 }

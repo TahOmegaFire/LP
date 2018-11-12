@@ -15,6 +15,10 @@ public class Mago extends Clase
 
 	public void ataque(Personaje enemigo, Personaje yo)
 	{
+		if (yo.getRaza().getNombre().equals("Enano")) {
+			yo.getRaza().Habilidad(yo);
+			System.out.print("\n"+yo.getNombre()+" activa su habilidad racial de "+yo.getRaza().getNombre()+" y se regenera 1 punto de vida");
+		}
 		int dmg = Juego.lanzarDados(6);
 		int evade = 0;
 		if(enemigo.getClase().getDefiende() == true)
@@ -34,8 +38,18 @@ public class Mago extends Clase
 		if (evade == 20) {
 			System.out.print("\n"+enemigo.getNombre()+" ha evadido completamente el ataque");
 		} else{
+			if (enemigo.getRaza().getNombre().equals("Humano")) {
+				if (evade == 1) {
+					System.out.print("\n"+enemigo.getNombre()+" activa su habilidad racial de "+enemigo.getRaza().getNombre());
+					evade = enemigo.getRaza().Habilidad(evade);
+				}
+			} else {
+				if (enemigo.getRaza().getNombre().equals("Elfo")) {
+					System.out.print("\n"+enemigo.getNombre()+" activa su habilidad racial de "+enemigo.getRaza().getNombre()+" y obtiene un +2");
+					evade = enemigo.getRaza().Habilidad(evade);
+				}
+			}
 			System.out.print("\n"+enemigo.getNombre()+" finalmente resiste con :"+ (evade + enemigo.getRaza().getDestreza()));
-
 			if(evade + enemigo.getRaza().getDestreza() >= 13) {
 				dmg /= 2;
 				System.out.print("\n"+enemigo.getNombre()+" reduce a la mitad el daño total");

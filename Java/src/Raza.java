@@ -16,8 +16,8 @@ public abstract class Raza
 
 	public abstract void crearRaza();
 
-	public abstract void Habilidad();
-
+	public abstract void Habilidad(Personaje personaje);
+	public abstract int Habilidad(int n);
 	public int getFuerza() { return fuerza; }
 	public int getDestreza() { return destreza; }
 	public int getConstitucion() { return constitucion; }

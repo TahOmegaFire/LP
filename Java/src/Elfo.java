@@ -15,8 +15,12 @@ public class Elfo extends Raza
 		setNombre("Elfo");
 	}
 
-	public void Habilidad()
+	public void Habilidad(Personaje personaje)
 	{
 
+	}
+	public int Habilidad(int n){
+		n += 2;
+		return n;
 	}
 }

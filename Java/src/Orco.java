@@ -15,8 +15,12 @@ public class Orco extends Raza
 		setNombre("Orco");
 	}
 
-	public void Habilidad()
+	public void Habilidad(Personaje personaje)
 	{
 
+	}
+	public int Habilidad(int n){
+		n += 2;
+		return n;
 	}
 }
