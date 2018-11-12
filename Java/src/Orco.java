@@ -6,7 +6,6 @@ public class Orco extends Raza
 	{
 		crearRaza();
 	}
-
 	public void crearRaza()
 	{
 		super.fuerza = 2;
@@ -15,10 +14,7 @@ public class Orco extends Raza
 		setNombre("Orco");
 	}
 
-	public void Habilidad(Personaje personaje)
-	{
-
-	}
+	public void Habilidad(Personaje personaje);
 	public int Habilidad(int n){
 		n += 2;
 		return n;
