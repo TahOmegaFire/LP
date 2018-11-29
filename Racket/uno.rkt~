@@ -1,0 +1,16 @@
+#lang racket
+(define (biseccion eq lista iter)
+  (let aux([l lista] [num iter] [m 0])
+    (cond
+      [(= num 0) m]
+      [(= (eq (car l)) 0) (car l)]
+      [(= (eq (cadr l)) 0) (cadr l)]
+      [(< (* (eq (car l)) (eq (cadr l))) 0)
+       (cond [(null? (aux (list (car l) (/ (+ (car l) (cadr l)) 2) )  (- num 1) (/ (+ (car l) (cadr l)) 2)))
+              (aux (list (/ (+ (car l) (cadr l)) 2) (cadr l)) (- num 1) (/ (+ (car l) (cadr l)) 2))])
+       ]
+      [(> (* (eq (car l)) (eq (cadr l))) 0) null]
+      )
+    )
+ )
+(biseccion (lambda(x) (+ (* x x) (* 2 x) 0)) '(-1 2) 2)
