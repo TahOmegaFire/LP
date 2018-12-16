@@ -1,3 +1,6 @@
+%Se espera que para la consulta, se llame a ciudades(X, Y, Z), con X la ciudad de origen, Y la cantidad de combustible disponible, y Z una variable para la lista de alcanzables.
+%Las ciudades disponibles están enumeradas del 1 al 10.
+
 ciudad(1,2,1).
 ciudad(2,5,2).
 ciudad(5,6,1).
