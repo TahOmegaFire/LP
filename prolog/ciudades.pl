@@ -16,7 +16,7 @@ ciudad(7,6,1).
 ciudad(7,8,1).
 ciudad(8,9,2).
 ciudad(9,10,1).
-ciudades(O,Com,R):- findall((D,P),ciudad(O,D,P),L),min(L,Com,M),list_to_set(M,R),!.
+ciudades(O,Com,R):- findall((D,P),ciudad(O,D,P),L),min(L,Com,M),list_to_set(M,S),delete(S,O,R),!.
 min(_,Com,[]):- Com < 0 .
 min([],_,[]).
 min([(_,P)|L],Com,M):- Com2 is Com - P, Com2 < 0,min(L,Com,M).
